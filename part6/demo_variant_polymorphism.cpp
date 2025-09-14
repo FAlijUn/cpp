@@ -1,3 +1,8 @@
+#include <string>
+#include <iostream>
+// 一个类型安全的联合体
+#include <variant>
+
 class Triangle {
 public:
     void Render() { std::cout << "Drawing a triangle!\n"; }
