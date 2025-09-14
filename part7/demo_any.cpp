@@ -2,6 +2,7 @@
 #include <iostream>
 #include <map>
 #include <string>
+#include <cassert>
 
 int main() {
     std::any a(12);
@@ -37,6 +38,29 @@ int main() {
             std::cout << "float: " << std::any_cast<float>(val) << '\n ';
     }
     return 0;
+
+    // 默认初始化:
+    std::any a;
+    assert(!a.has_value());
+    // 用对象初始化:
+    std::any a2{10}; // int
+    // 原位构造:
+    std::any a5{std::in_place_type<std::string>, "Hello World"};
+    // make_any
+    std::any a6 = std::make_any<std::string>("Hello World");
+    // std::any有一个名为std::make_any的工厂函数，返回
+    // return std::any(std::in_place_type<T>, std::forward<Args>(args)...);
+    auto b = std::make_any<std::string>("hello");
+
+    std::any var = 10;
+    // 读取访问:
+    auto a = std::any_cast<int>(var);
+    // 通过引用进行读写访问:
+    std::any_cast<int&>(var) = 11;
+    // 通过指针进行读写访问:
+    int* ptr = std::any_cast<int>(&var);
+    *ptr = 12;
+
 }
 
 // 一些可能的场景：
